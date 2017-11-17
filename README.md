@@ -69,7 +69,9 @@ can reduce actual size. It also makes life easier for compression algorithms.
     |-------------------------------------------------------------------|
     |                                                                   |
     |                 POSSIBLE REPEAT OF PREVIOUS BLOCK                 |
-    |                                                                   | 
+    |                                                                   |
+    |-------------------------------------------------------------------| 
+    |                            PADDING                                |
     |-------------------------------------------------------------------|
     |                                                                   |
     |                                                                   |
@@ -77,4 +79,9 @@ can reduce actual size. It also makes life easier for compression algorithms.
     |                                                                   |
     |                                                                   |
     |-------------------------------------------------------------------|
+    |                            PADDING                                |
+    |-------------------------------------------------------------------|
+    |                                                                   |
+    |                 POSSIBLE REPEAT OF PREVIOUS BLOCK                 |
+    |                                                                   |
 
