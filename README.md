@@ -41,11 +41,19 @@ instances the file contains.
 Then there is a padding of 12 bytes up to (32) where the header block
 always begins.
 
-After the headers there is the previously specified data blocks.
+After the headers there is the previously specified data blocks. It's
+acceptable to append any amount of undefineed data after the header block.
+This can be used to pre-allocate storage for a file that may grow, minimizing
+how much the file changes when repackaged.
 
 Each new data block MUST start on a 16 byte aligned address in the
 file, if a file doesn't fill up the missing space at the end of its
-allocated block, it SHOULD be padded with NULL bytes.
+allocated block, it SHOULD be padded with NULL bytes. A data block may append
+any amount additional undefined data until the next data block. This can be used
+to maintain positions of files when content changes.
+
+It's recommended that preallocated blocks contain zero bytes, that way file systems like ext4 
+can reduce actual size. It also makes life easier for compression algorithms.
 
 
     0                4                8                12               16
