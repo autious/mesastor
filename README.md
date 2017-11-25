@@ -1,8 +1,8 @@
 # Mesastor
-Mesastor is a simple data-package format suitable for large quantities of small files. It focuses on fast extraction.
+Mesastor is a simple data-package format suitable for large quantities of small files. It focuses on fast extraction and stability when repackaging, making it suitable for delta-based storage and transfer systems, such as steam storage backend and opendedup.
 
 The specification is also endianness aware but not endianness specific for optimal platform performance. The header contains
-an endianness specifier and an implemenation can choose to either ignore (and fail) or convert a file that i being loded.
+an endianness specifier and an implemenation can choose to either ignore (and fail) or convert the binary content to match.
 
 ## File specification
 Asset file format MESASTOR(Max Emil Stefan Alexander STORage format)
