@@ -30,10 +30,10 @@ parsers implementation.
 Following these 4 bytes there is a 4(16) byte uint declaring the
 length of each file header block. This value MUST be a multiple of 16
 bytes to simplify memory aligned copies from disk, meaning that the
-last 16 bytes should be aligned.  The last 16 bytes must be included
-in the size, it can't just specify the size of the name in memory.
-Names stored in the header must be end-padded with any number of NULL
-bytes to simplify copies to stack memory when parsing the file header.
+last 16 bytes should be aligned. The Instance Size MUST include all
+all data, not just the size of the filename. All filenames must have 
+at least a single NULL byte at the end. Filenames MUST be followed by NULL 
+bytes until the rest of the file meta data.
 
 Then there's another 4(20) byte variable indicating how many header
 instances the file contains.
