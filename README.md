@@ -1,8 +1,22 @@
 # Mesastor
-Mesastor is a simple data-package format suitable for large quantities of small files. It focuses on fast extraction and stability when repackaging, making it suitable for delta-based storage and transfer systems, such as steam storage backend and opendedup.
+Mesastor is a simple data-package format suitable for large quantities of small files. 
+It puts a focus on fast extraction and stability when repackaging, making it suitable 
+for games that use delta-based storage and transfer systems, such as steam storage backend 
+and opendedup.
 
-The specification is also endianness aware but not endianness specific for optimal platform performance. The header contains
+The specification is also endian aware but not endian specific for optimal platform performance. The header contains
 an endianness specifier and an implemenation can choose to either ignore (and fail) or convert the binary content to match.
+
+The implementation is a single-header C99 implementation, according to the style of stb projects: https://github.com/nothings/stb
+To use the library simply include the mesastor.h into your project. At least one translation unit (.c or .cpp file) has to 
+ #define MESASTOR_IMPL to include the implementation, a suggestion is to create a mesastor.c file in your project that contains:
+
+```
+#define MESASTOR_IMPL
+#include <mesastor.h>
+```
+To see an example of use, i refer to the test.c, note that this file is not required when using the library, it's only used
+to verify functionality during development.
 
 ## File specification
 Asset file format MESASTOR(Max Emil Stefan Alexander STORage format)
@@ -28,10 +42,10 @@ version 1. This version must always be a perfect match with the
 parsers implementation.
 
 Following these 4 bytes there is a 4(16) byte uint declaring the
-length of each file header block. This value MUST be a multiple of 16
+size of each file header block. This value MUST be a multiple of 16
 bytes to simplify memory aligned copies from disk, meaning that the
-last 16 bytes should be aligned. The Instance Size MUST include all
-all data, not just the size of the filename. All filenames must have 
+last 16 bytes should be aligned. The Filename Size defines the maximum length
+of a filename. All filenames must have 
 at least a single NULL byte at the end. Filenames MUST be followed by NULL 
 bytes until the rest of the file meta data.
 
@@ -57,15 +71,16 @@ can reduce actual size. It also makes life easier for compression algorithms.
 
 
     0                4                8                12               16
-    |----------------|----------------|----------------|----------------|16
-    |    "MESA"           "STOR"          ENDIANESS    |     VERSION    |
-    |----------------|----------------|----------------|----------------|32
-    | Instance Length  Instance Count      PADDING           PADDING    |
     |----------------|----------------|----------------|----------------|
+    |    "MESA"           "STOR"          ENDIANESS    |     VERSION    |
+    |----------------|----------------|----------------|----------------|16
+    | Filename Size      File Count        PADDING           PADDING    |
+    |----------------|----------------|----------------|----------------|32
     |                                                                   |
     |                              Filename...                          |
-    |   ............................................................    |
-    |            Start Pos            |              Size               |
+    .                                                                   .
+    |   ............................................................    |32 + Filename Size
+    |            File Start           |         File Size               |
     |-------------------------------------------------------------------|
     |                                                                   |
     |                 POSSIBLE REPEAT OF PREVIOUS BLOCK                 |

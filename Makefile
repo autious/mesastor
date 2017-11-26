@@ -1,11 +1,9 @@
 all: mesa-unpacker mesa-packer libmesa.so mesa.o
 
-mesa-unpacker: unpacker.o mesa.o
-	gcc -std=c99 -ggdb unpacker.o mesa.o -o mesa-unpacker
-mesa-packer: packer.o mesa.o
+mesastor-cli: mesator-cli.o mesastor.o
 	gcc -std=c99 -ggdb packer.o -o mesa-packer
-packer.o: packer.c
-	gcc -std=c99 -ggdb -c packer.c -o packer.o
+mesastor-cli.o: mesastor-cli.c
+	gcc -std=c99 -ggdb -c mesastor-cli.c -o mesastor-cli.o
 unpacker.o: unpacker.c
 	gcc -std=c99 -ggdb -c unpacker.c -o unpacker.o
 libmesa.so: mesa.o
