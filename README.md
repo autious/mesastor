@@ -65,7 +65,7 @@ can reduce actual size. It also makes life easier for compression algorithms.
     |                                                                   |
     |                              Filename...                          |
     |   ............................................................    |
-    |    Start Pos   |     Size       |    PADDING     |   PADDING      |
+    |            Start Pos            |              Size               |
     |-------------------------------------------------------------------|
     |                                                                   |
     |                 POSSIBLE REPEAT OF PREVIOUS BLOCK                 |
